@@ -25,9 +25,12 @@ public class DatabaseRepository {
 
     private static final String PU_DEFAULT_NAME = "pasarela_loggeo";
     private static final HashMap<String, String> PU_DEFAULT_PROPERTIES = getDefaultProperties();
-    private static final EntityManagerFactory DEFAULT_EMF = Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, PU_DEFAULT_PROPERTIES);
+    private static EntityManagerFactory DEFAULT_EMF;
 
     public static EntityManagerFactory getDefaultFactory() {
+        if (DEFAULT_EMF == null) {
+            DEFAULT_EMF = Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, PU_DEFAULT_PROPERTIES);
+        }
         return DEFAULT_EMF;
     }
 
@@ -62,7 +65,7 @@ public class DatabaseRepository {
     }
 
     public static ConexionPropertiesModel getDefautlUbicacion() {
-        
+
         return new ConexionPropertiesModel() {
             @Override
             public String getContrasena() {
