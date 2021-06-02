@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jobits.pos.client.tennant.rest.domain;
+package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "BaseDatos.findByUsuario", query = "SELECT b FROM BaseDatos b WHERE b.usuario = :usuario"),
     @NamedQuery(name = "BaseDatos.findByContrasena", query = "SELECT b FROM BaseDatos b WHERE b.contrasena = :contrasena"),
     @NamedQuery(name = "BaseDatos.findByDriver", query = "SELECT b FROM BaseDatos b WHERE b.driver = :driver")})
-public class BaseDatos implements Serializable {
+public class BaseDatosEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,12 +49,12 @@ public class BaseDatos implements Serializable {
     private String driver;
     @JoinColumn(name = "cuentaid", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Cuenta cuenta;
+    private CuentaEntity cuenta;
 
-    public BaseDatos() {
+    public BaseDatosEntity() {
     }
 
-    public BaseDatos(Integer cuentaid) {
+    public BaseDatosEntity(Integer cuentaid) {
         this.cuentaid = cuentaid;
     }
 
@@ -98,11 +98,11 @@ public class BaseDatos implements Serializable {
         this.driver = driver;
     }
 
-    public Cuenta getCuenta() {
+    public CuentaEntity getCuenta() {
         return cuenta;
     }
 
-    public void setCuenta(Cuenta cuenta) {
+    public void setCuenta(CuentaEntity cuenta) {
         this.cuenta = cuenta;
     }
 
@@ -116,10 +116,10 @@ public class BaseDatos implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof BaseDatos)) {
+        if (!(object instanceof BaseDatosEntity)) {
             return false;
         }
-        BaseDatos other = (BaseDatos) object;
+        BaseDatosEntity other = (BaseDatosEntity) object;
         if ((this.cuentaid == null && other.cuentaid != null) || (this.cuentaid != null && !this.cuentaid.equals(other.cuentaid))) {
             return false;
         }

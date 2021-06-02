@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jobits.pos.client.tennant.rest.domain;
+package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cuenta.findByContrasena", query = "SELECT c FROM Cuenta c WHERE c.contrasena = :contrasena"),
     @NamedQuery(name = "Cuenta.findByEstado", query = "SELECT c FROM Cuenta c WHERE c.estado = :estado"),
     @NamedQuery(name = "Cuenta.findByActiva", query = "SELECT c FROM Cuenta c WHERE c.activa = :activa")})
-public class Cuenta implements Serializable {
+public class CuentaEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,14 +46,14 @@ public class Cuenta implements Serializable {
     private String estado;
     private Boolean activa;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    private BaseDatos baseDatos;
+    private BaseDatosEntity baseDatos;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    private Token token;
+    private TokenEntity token;
 
-    public Cuenta() {
+    public CuentaEntity() {
     }
 
-    public Cuenta(Integer id) {
+    public CuentaEntity(Integer id) {
         this.id = id;
     }
 
@@ -97,19 +97,19 @@ public class Cuenta implements Serializable {
         this.activa = activa;
     }
 
-    public BaseDatos getBaseDatos() {
+    public BaseDatosEntity getBaseDatos() {
         return baseDatos;
     }
 
-    public void setBaseDatos(BaseDatos baseDatos) {
+    public void setBaseDatos(BaseDatosEntity baseDatos) {
         this.baseDatos = baseDatos;
     }
 
-    public Token getToken() {
+    public TokenEntity getToken() {
         return token;
     }
 
-    public void setToken(Token token) {
+    public void setToken(TokenEntity token) {
         this.token = token;
     }
 
@@ -123,10 +123,10 @@ public class Cuenta implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cuenta)) {
+        if (!(object instanceof CuentaEntity)) {
             return false;
         }
-        Cuenta other = (Cuenta) object;
+        CuentaEntity other = (CuentaEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

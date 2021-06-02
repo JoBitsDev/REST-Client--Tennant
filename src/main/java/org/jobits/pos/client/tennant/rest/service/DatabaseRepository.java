@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest.repository;
+package org.jobits.pos.client.tennant.rest.service;
 
-import com.jobits.pos.client.tennant.rest.domain.BaseDatos;
-import com.jobits.pos.client.tennant.rest.domain.Cuenta;
+import com.root101.clean.core.domain.services.ResourceHandler;
+import org.jobits.pos.client.tennant.core.domain.BaseDatos;
+import org.jobits.pos.client.tennant.core.domain.Cuenta;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import org.jobits.db.core.domain.TipoConexion;
+import org.jobits.db.pool.ConnectionPoolService;
 
 /**
  * FirstDream
@@ -21,37 +23,55 @@ import org.jobits.db.core.domain.TipoConexion;
  * @author Jorge
  *
  */
-public class DatabaseRepository {
+public class DatabaseRepository implements ConnectionPoolService {
 
     private static final String PU_DEFAULT_NAME = "pasarela_loggeo";
     private static final HashMap<String, String> PU_DEFAULT_PROPERTIES = getDefaultProperties();
     private static EntityManagerFactory DEFAULT_EMF;
 
-    public static EntityManagerFactory getDefaultFactory() {
+    @Override
+    public EntityManagerFactory getEMF() {
         if (DEFAULT_EMF == null) {
             DEFAULT_EMF = Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, PU_DEFAULT_PROPERTIES);
         }
         return DEFAULT_EMF;
     }
 
-    public static EntityManager getDefaultConnection() {
-        return getDefaultFactory().createEntityManager();
+    @Override
+    public EntityManager getCurrentConnection() {
+        return getEMF().createEntityManager();
     }
 
-    public static EntityManagerFactory getFactoryFrom(Cuenta cuenta) {
-        return Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, getPropertiesFrom(cuenta.getBaseDatos()));
+    @Override
+    public ConexionPropertiesModel getCurrentUbicacion() {
+        return getDefautlUbicacion();
+    }
+
+    @Override
+    public EntityManagerFactory getEmfFrom(ConexionPropertiesModel connectionsProperties) {
+        return getEMF();
+    }
+
+    @Override
+    public boolean isConnected() {
+        return true;
+    }
+
+    @Override
+    public void resetConnection() {
+        getEMF().getCache().evictAll();
+    }
+
+    public static EntityManagerFactory getFactoryFrom(BaseDatos cuenta) {
+        return Persistence.createEntityManagerFactory(PU_DEFAULT_NAME, getPropertiesFrom(cuenta));
     }
 
     private static HashMap<String, String> getDefaultProperties() {
         HashMap<String, String> ret = new HashMap<>();
-//        ret.put(PersistenceProperties.URL.getName(), "jdbc:postgresql://localhost:5432/jobitsjv_pasarela_loggeo");
-//        ret.put(PersistenceProperties.USER.getName(), "jobitsjv_pasarela_user");
-//        ret.put(PersistenceProperties.PASSWORD.getName(), "a123b456c789.");
-//        ret.put(PersistenceProperties.DRIVER.getName(), "org.postgresql.Driver");
-        ret.put(PersistenceProperties.URL.getName(), "jdbc:postgresql://localhost:5432/pasarela_loggeo");
-        ret.put(PersistenceProperties.USER.getName(), "pasarela_user");
-        ret.put(PersistenceProperties.PASSWORD.getName(), "pasarela_user");
-        ret.put(PersistenceProperties.DRIVER.getName(), "org.postgresql.Driver");
+        ret.put(PersistenceProperties.URL.getName(), ResourceHandler.getString("com.jobits.pos.tennant.repo.db.url"));
+        ret.put(PersistenceProperties.USER.getName(), ResourceHandler.getString("com.jobits.pos.tennant.repo.db.user"));
+        ret.put(PersistenceProperties.PASSWORD.getName(), ResourceHandler.getString("com.jobits.pos.tennant.repo.db.pass"));
+        ret.put(PersistenceProperties.DRIVER.getName(), ResourceHandler.getString("com.jobits.pos.tennant.repo.db.driver"));
         return ret;
     }
 
@@ -69,12 +89,12 @@ public class DatabaseRepository {
         return new ConexionPropertiesModel() {
             @Override
             public String getContrasena() {
-                return "pasarela_user";
+                return PU_DEFAULT_PROPERTIES.get(PersistenceProperties.PASSWORD.getName());
             }
 
             @Override
             public String getDriver() {
-                return "org.postgresql.Driver";
+                return PU_DEFAULT_PROPERTIES.get(PersistenceProperties.DRIVER.getName());
             }
 
             @Override
@@ -89,12 +109,12 @@ public class DatabaseRepository {
 
             @Override
             public String getUrl() {
-                return "jdbc:postgresql://localhost:5432/pasarela_loggeo";
+                return PU_DEFAULT_PROPERTIES.get(PersistenceProperties.URL.getName());
             }
 
             @Override
             public String getUsuario() {
-                return "pasarela_user";
+                return PU_DEFAULT_PROPERTIES.get(PersistenceProperties.USER.getName());
             }
         };
     }

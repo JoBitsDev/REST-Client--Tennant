@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest.module;
+package org.jobits.pos.client.tennant.core.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;

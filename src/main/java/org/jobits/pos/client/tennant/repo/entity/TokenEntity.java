@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jobits.pos.client.tennant.rest.domain;
+package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Token.findByCuentaid", query = "SELECT t FROM Token t WHERE t.cuentaid = :cuentaid"),
     @NamedQuery(name = "Token.findByToken", query = "SELECT t FROM Token t WHERE t.token = :token"),
     @NamedQuery(name = "Token.findByExpira", query = "SELECT t FROM Token t WHERE t.expira = :expira")})
-public class Token implements Serializable {
+public class TokenEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,12 +44,12 @@ public class Token implements Serializable {
     private Date expira;
     @JoinColumn(name = "cuentaid", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
-    private Cuenta cuenta;
+    private CuentaEntity cuenta;
 
-    public Token() {
+    public TokenEntity() {
     }
 
-    public Token(Integer cuentaid) {
+    public TokenEntity(Integer cuentaid) {
         this.cuentaid = cuentaid;
     }
 
@@ -77,11 +77,11 @@ public class Token implements Serializable {
         this.expira = expira;
     }
 
-    public Cuenta getCuenta() {
+    public CuentaEntity getCuenta() {
         return cuenta;
     }
 
-    public void setCuenta(Cuenta cuenta) {
+    public void setCuenta(CuentaEntity cuenta) {
         this.cuenta = cuenta;
     }
 
@@ -95,10 +95,10 @@ public class Token implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Token)) {
+        if (!(object instanceof TokenEntity)) {
             return false;
         }
-        Token other = (Token) object;
+        TokenEntity other = (TokenEntity) object;
         if ((this.cuentaid == null && other.cuentaid != null) || (this.cuentaid != null && !this.cuentaid.equals(other.cuentaid))) {
             return false;
         }

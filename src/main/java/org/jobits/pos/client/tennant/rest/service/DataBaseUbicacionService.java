@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest.service;
+package org.jobits.pos.client.tennant.rest.service;
 
 import com.root101.clean.core.app.usecase.AbstractUseCaseImpl;
 import java.beans.PropertyChangeListener;
@@ -68,7 +68,7 @@ public class DataBaseUbicacionService extends AbstractUseCaseImpl implements Ubi
         }
 
         public void setSelectedUbicacion(ConexionPropertiesModel selected) {
-           // this.selectedUbicacion = selected;
+            this.selectedUbicacion = selected;
         }
 
         @Override

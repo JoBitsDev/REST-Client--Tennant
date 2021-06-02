@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest.repository;
+package org.jobits.pos.client.tennant.rest.service;
 
 /**
  * FirstDream

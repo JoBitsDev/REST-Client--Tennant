@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest.domain;
+package org.jobits.pos.client.tennant.core.domain;
 
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import org.jobits.db.core.domain.TipoConexion;
@@ -24,17 +24,18 @@ public class TennantWrapper {
         this.tennantEmf = propertiesModel;
     }
 
-    public TennantWrapper(Token tennantToken, Cuenta c) {
+    public TennantWrapper(Token tennantToken, BaseDatos c) {
         this.tennantToken = tennantToken;
+        c.setAccessToken(tennantToken);
         this.tennantEmf = new ConexionPropertiesModel() {
             @Override
             public String getContrasena() {
-                return c.getBaseDatos().getContrasena();
+                return c.getContrasena();
             }
 
             @Override
             public String getDriver() {
-                return c.getBaseDatos().getDriver();
+                return c.getDriver();
             }
 
             @Override
@@ -49,12 +50,12 @@ public class TennantWrapper {
 
             @Override
             public String getUrl() {
-                return c.getBaseDatos().getUrl();
+                return c.getUrl();
             }
 
             @Override
             public String getUsuario() {
-                return c.getBaseDatos().getUsuario();
+                return c.getUsuario();
             }
         };
     }

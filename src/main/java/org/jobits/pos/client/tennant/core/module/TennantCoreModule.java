@@ -3,15 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest.module;
+package org.jobits.pos.client.tennant.core.module;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.jobits.pos.client.tennant.rest.service.DatabaseRepository;
 import com.root101.clean.core.app.modules.AbstractModule;
 import com.root101.clean.core.app.modules.DefaultAbstractModule;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.exceptions.AlreadyInitModule;
 import com.root101.clean.core.exceptions.NotInitModule;
+import org.jobits.db.core.module.DataVersionControlModule;
+import org.jobits.db.pool.ConnectionPoolHandler;
+import org.jobits.db.versioncontrol.DataVersionControlHandler;
+import org.jobits.db.versioncontrol.DataVersionControlService;
 
 /**
  *
@@ -42,16 +47,31 @@ public class TennantCoreModule extends DefaultAbstractModule {
      * @return
      * @Deprecated
      */
-    public static TennantCoreModule init(AbstractModule repoModule) {
+    public static TennantCoreModule init(AbstractModule... repoModule) {
         if (INSTANCE != null) {
             throw new AlreadyInitModule(ResourceHandler.getString("com.jobits.pos.tennant.name"));
         }
         INSTANCE = new TennantCoreModule();
-        INSTANCE.registerModule(repoModule);
+        for (AbstractModule m : repoModule) {
+            INSTANCE.registerModule(m);
+        }
         return getInstance();
     }
 
     private TennantCoreModule() {
+        registerResources();
+        registerConnectionPool();
+        //org.jobits.db.core.usecase.UbicacionConexionHandler.registerUbicacionConexionService(DataBaseUbicacionService.getInstance());
+
+    }
+
+    private void registerConnectionPool() {
+        DataVersionControlModule.init();
+        String schema = ResourceHandler.getString("com.jobits.pos.tennant.repo.db.shema");
+        String dir = "org/jobits/pos/tennant/sql";
+        ConnectionPoolHandler.registerConnectionPoolService(getModuleName(), new DatabaseRepository());
+        DataVersionControlHandler.registerDataVersionControlService(DataVersionControlService.from(MODULE_NAME, dir, schema));
+        
     }
 
     @Override
@@ -62,6 +82,10 @@ public class TennantCoreModule extends DefaultAbstractModule {
     @Override
     protected <T> T getOwnImplementation(Class<T> type) {
         return inj.getInstance(type);
+    }
+
+    private void registerResources() {
+        ResourceHandler.registerInternal("tennant_module");
     }
 
 }

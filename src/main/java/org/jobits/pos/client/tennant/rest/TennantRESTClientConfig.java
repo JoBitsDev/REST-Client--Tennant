@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.tennant.rest;
+package org.jobits.pos.client.tennant.rest;
 
-import org.jobits.db.core.module.DataVersionControlModule;
+import org.jobits.pos.client.tennant.core.module.TennantCoreModule;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,11 +18,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TennantRESTClientConfig {
 
-    public static final String BASE_PACKAGE = "com.jobits.pos.client.tennant.rest";
+    public static final String BASE_PACKAGE = "org.jobits.pos.client.tennant.rest";
 
     public TennantRESTClientConfig() {
-        DataVersionControlModule.init();
-        //org.jobits.db.core.usecase.UbicacionConexionHandler.registerUbicacionConexionService(DataBaseUbicacionService.getInstance());
+        TennantCoreModule.init();
     }
 
 }
