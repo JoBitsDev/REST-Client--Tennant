@@ -7,54 +7,70 @@
 package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * FirstDream
+ * 
+ * JoBits
  * @author Jorge
  * 
  */
 @Entity
+@Table(name = "cuenta")
 @NamedQueries({
     @NamedQuery(name = "Cuenta.findAll", query = "SELECT c FROM Cuenta c"),
     @NamedQuery(name = "Cuenta.findById", query = "SELECT c FROM Cuenta c WHERE c.id = :id"),
     @NamedQuery(name = "Cuenta.findByUsuario", query = "SELECT c FROM Cuenta c WHERE c.usuario = :usuario"),
     @NamedQuery(name = "Cuenta.findByContrasena", query = "SELECT c FROM Cuenta c WHERE c.contrasena = :contrasena"),
-    @NamedQuery(name = "Cuenta.findByEstado", query = "SELECT c FROM Cuenta c WHERE c.estado = :estado"),
-    @NamedQuery(name = "Cuenta.findByActiva", query = "SELECT c FROM Cuenta c WHERE c.activa = :activa")})
+    @NamedQuery(name = "Cuenta.findByEstado", query = "SELECT c FROM Cuenta c WHERE c.estado = :estado")})
 public class CuentaEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @Column(name = "id")
     private Integer id;
-    @Size(max = 30)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "usuario")
     private String usuario;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "contrasena")
     private String contrasena;
     @Size(max = 255)
+    @Column(name = "estado")
     private String estado;
-    private Boolean activa;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    private BaseDatosEntity baseDatos;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
-    private TokenEntity token;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaid")
+    private List<BaseDatosEntity> baseDatosList;
 
     public CuentaEntity() {
     }
 
     public CuentaEntity(Integer id) {
         this.id = id;
+    }
+
+    public CuentaEntity(Integer id, String usuario, String contrasena) {
+        this.id = id;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
     }
 
     public Integer getId() {
@@ -89,28 +105,12 @@ public class CuentaEntity implements Serializable {
         this.estado = estado;
     }
 
-    public Boolean getActiva() {
-        return activa;
+    public List<BaseDatosEntity> getBaseDatosList() {
+        return baseDatosList;
     }
 
-    public void setActiva(Boolean activa) {
-        this.activa = activa;
-    }
-
-    public BaseDatosEntity getBaseDatos() {
-        return baseDatos;
-    }
-
-    public void setBaseDatos(BaseDatosEntity baseDatos) {
-        this.baseDatos = baseDatos;
-    }
-
-    public TokenEntity getToken() {
-        return token;
-    }
-
-    public void setToken(TokenEntity token) {
-        this.token = token;
+    public void setBaseDatosList(List<BaseDatosEntity> baseDatosList) {
+        this.baseDatosList = baseDatosList;
     }
 
     @Override
@@ -135,7 +135,7 @@ public class CuentaEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jobits.pos.persistence.pasarela.Cuenta[ id=" + id + " ]";
+        return "org.jobits.pos.client.tennant.repo.entity.Cuenta[ id=" + id + " ]";
     }
 
 }

@@ -8,18 +8,22 @@ package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * FirstDream
+ * 
+ * JoBits
  * @author Jorge
  * 
  */
@@ -27,7 +31,8 @@ import javax.validation.constraints.Size;
 @Table(name = "base_datos")
 @NamedQueries({
     @NamedQuery(name = "BaseDatos.findAll", query = "SELECT b FROM BaseDatos b"),
-    @NamedQuery(name = "BaseDatos.findByCuentaid", query = "SELECT b FROM BaseDatos b WHERE b.cuentaid = :cuentaid"),
+    @NamedQuery(name = "BaseDatos.findById", query = "SELECT b FROM BaseDatos b WHERE b.id = :id"),
+    @NamedQuery(name = "BaseDatos.findByNombre", query = "SELECT b FROM BaseDatos b WHERE b.nombre = :nombre"),
     @NamedQuery(name = "BaseDatos.findByUrl", query = "SELECT b FROM BaseDatos b WHERE b.url = :url"),
     @NamedQuery(name = "BaseDatos.findByUsuario", query = "SELECT b FROM BaseDatos b WHERE b.usuario = :usuario"),
     @NamedQuery(name = "BaseDatos.findByContrasena", query = "SELECT b FROM BaseDatos b WHERE b.contrasena = :contrasena"),
@@ -36,34 +41,72 @@ public class BaseDatosEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
-    private Integer cuentaid;
-    @Size(max = 255)
+    @Size(min = 1, max = 100)
+    @Column(name = "nombre")
+    private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "url")
     private String url;
-    @Size(max = 30)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "usuario")
     private String usuario;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "contrasena")
     private String contrasena;
-    @Size(max = 100)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "driver")
     private String driver;
-    @JoinColumn(name = "cuentaid", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private CuentaEntity cuenta;
+    @JoinColumn(name = "cuentaid", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private CuentaEntity cuentaid;
+    @JoinColumn(name = "tokentoken", referencedColumnName = "token")
+    @ManyToOne(optional = false)
+    private TokenEntity tokentoken;
 
     public BaseDatosEntity() {
     }
 
-    public BaseDatosEntity(Integer cuentaid) {
-        this.cuentaid = cuentaid;
+    public BaseDatosEntity(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCuentaid() {
-        return cuentaid;
+    public BaseDatosEntity(Integer id, String nombre, String url, String usuario, String contrasena, String driver) {
+        this.id = id;
+        this.nombre = nombre;
+        this.url = url;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.driver = driver;
     }
 
-    public void setCuentaid(Integer cuentaid) {
-        this.cuentaid = cuentaid;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getUrl() {
@@ -98,18 +141,26 @@ public class BaseDatosEntity implements Serializable {
         this.driver = driver;
     }
 
-    public CuentaEntity getCuenta() {
-        return cuenta;
+    public CuentaEntity getCuentaid() {
+        return cuentaid;
     }
 
-    public void setCuenta(CuentaEntity cuenta) {
-        this.cuenta = cuenta;
+    public void setCuentaid(CuentaEntity cuentaid) {
+        this.cuentaid = cuentaid;
+    }
+
+    public TokenEntity getTokentoken() {
+        return tokentoken;
+    }
+
+    public void setTokentoken(TokenEntity tokentoken) {
+        this.tokentoken = tokentoken;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cuentaid != null ? cuentaid.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -120,7 +171,7 @@ public class BaseDatosEntity implements Serializable {
             return false;
         }
         BaseDatosEntity other = (BaseDatosEntity) object;
-        if ((this.cuentaid == null && other.cuentaid != null) || (this.cuentaid != null && !this.cuentaid.equals(other.cuentaid))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -128,7 +179,7 @@ public class BaseDatosEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jobits.pos.persistence.pasarela.BaseDatos[ cuentaid=" + cuentaid + " ]";
+        return "org.jobits.pos.client.tennant.repo.entity.BaseDatos[ id=" + id + " ]";
     }
 
 }

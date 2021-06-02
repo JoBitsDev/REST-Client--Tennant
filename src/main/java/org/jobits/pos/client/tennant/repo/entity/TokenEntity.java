@@ -8,57 +8,53 @@ package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * FirstDream
+ * 
+ * JoBits
  * @author Jorge
  * 
  */
 @Entity
+@Table(name = "token")
 @NamedQueries({
     @NamedQuery(name = "Token.findAll", query = "SELECT t FROM Token t"),
-    @NamedQuery(name = "Token.findByCuentaid", query = "SELECT t FROM Token t WHERE t.cuentaid = :cuentaid"),
     @NamedQuery(name = "Token.findByToken", query = "SELECT t FROM Token t WHERE t.token = :token"),
-    @NamedQuery(name = "Token.findByExpira", query = "SELECT t FROM Token t WHERE t.expira = :expira")})
+    @NamedQuery(name = "Token.findByExpiracion", query = "SELECT t FROM Token t WHERE t.expiracion = :expiracion")})
 public class TokenEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    private Integer cuentaid;
-    @Size(max = 255)
+    @Size(min = 1, max = 255)
+    @Column(name = "token")
     private String token;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expira;
-    @JoinColumn(name = "cuentaid", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private CuentaEntity cuenta;
+    @Column(name = "expiracion")
+    @Temporal(TemporalType.DATE)
+    private Date expiracion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tokentoken")
+    private List<BaseDatosEntity> baseDatosList;
 
     public TokenEntity() {
     }
 
-    public TokenEntity(Integer cuentaid) {
-        this.cuentaid = cuentaid;
-    }
-
-    public Integer getCuentaid() {
-        return cuentaid;
-    }
-
-    public void setCuentaid(Integer cuentaid) {
-        this.cuentaid = cuentaid;
+    public TokenEntity(String token) {
+        this.token = token;
     }
 
     public String getToken() {
@@ -69,26 +65,26 @@ public class TokenEntity implements Serializable {
         this.token = token;
     }
 
-    public Date getExpira() {
-        return expira;
+    public Date getExpiracion() {
+        return expiracion;
     }
 
-    public void setExpira(Date expira) {
-        this.expira = expira;
+    public void setExpiracion(Date expiracion) {
+        this.expiracion = expiracion;
     }
 
-    public CuentaEntity getCuenta() {
-        return cuenta;
+    public List<BaseDatosEntity> getBaseDatosList() {
+        return baseDatosList;
     }
 
-    public void setCuenta(CuentaEntity cuenta) {
-        this.cuenta = cuenta;
+    public void setBaseDatosList(List<BaseDatosEntity> baseDatosList) {
+        this.baseDatosList = baseDatosList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cuentaid != null ? cuentaid.hashCode() : 0);
+        hash += (token != null ? token.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +95,7 @@ public class TokenEntity implements Serializable {
             return false;
         }
         TokenEntity other = (TokenEntity) object;
-        if ((this.cuentaid == null && other.cuentaid != null) || (this.cuentaid != null && !this.cuentaid.equals(other.cuentaid))) {
+        if ((this.token == null && other.token != null) || (this.token != null && !this.token.equals(other.token))) {
             return false;
         }
         return true;
@@ -107,7 +103,7 @@ public class TokenEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jobits.pos.persistence.pasarela.Token[ cuentaid=" + cuentaid + " ]";
+        return "org.jobits.pos.client.tennant.repo.entity.Token[ token=" + token + " ]";
     }
 
 }
