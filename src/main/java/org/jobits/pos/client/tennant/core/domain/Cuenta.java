@@ -6,6 +6,7 @@
 package org.jobits.pos.client.tennant.core.domain;
 
 import com.root101.clean.core.domain.DomainObjectValitaded;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.utils.validation.Validable;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class Cuenta {
     private Integer id;
     private String usuario;
     private String contrasena;
-    private EstadoCuenta estado;
+    private String estado;
     private List<BaseDatos> baseDatos;
     //TODO: lastseen and created
 
@@ -54,12 +55,12 @@ public class Cuenta {
         this.contrasena = contrasena;
     }
 
-    public EstadoCuenta getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoCuenta estado) {
-        this.estado = estado;
+    public void setEstado(String estado) {
+        this.estado = validateEstado(estado);
     }
 
     public Boolean isActiva() {
@@ -115,4 +116,12 @@ public class Cuenta {
         return true;
     }
 
+        private String validateEstado(String estado) {
+        for (EstadoCuenta v : EstadoCuenta.values()) {
+            if (estado.equals(v.toString())) {
+                return estado;
+            }
+        }
+        throw new IllegalArgumentException(ResourceHandler.getString("msg.org.jobits.pos.tennant.core.domain.estado_no_valido"));
+    }
 }
