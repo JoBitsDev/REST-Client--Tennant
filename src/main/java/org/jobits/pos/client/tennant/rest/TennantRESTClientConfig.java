@@ -6,6 +6,7 @@
 package org.jobits.pos.client.tennant.rest;
 
 import org.jobits.pos.client.tennant.core.module.TennantCoreModule;
+import org.jobits.pos.client.tennant.repo.module.TennantRepoModule;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,7 +22,7 @@ public class TennantRESTClientConfig {
     public static final String BASE_PACKAGE = "org.jobits.pos.client.tennant.rest";
 
     public TennantRESTClientConfig() {
-        TennantCoreModule.init();
+        TennantCoreModule.init(TennantRepoModule.init());
     }
 
 }
