@@ -30,11 +30,11 @@ import javax.validation.constraints.Size;
  * 
  */
 @Entity
-@Table(name = "token")
+@Table(name = "token" , schema = "tennant")
 @NamedQueries({
-    @NamedQuery(name = "Token.findAll", query = "SELECT t FROM Token t"),
-    @NamedQuery(name = "Token.findByToken", query = "SELECT t FROM Token t WHERE t.token = :token"),
-    @NamedQuery(name = "Token.findByExpiracion", query = "SELECT t FROM Token t WHERE t.expiracion = :expiracion")})
+    @NamedQuery(name = "TokenEntity.findAll", query = "SELECT t FROM TokenEntity t"),
+    @NamedQuery(name = "TokenEntity.findByTokenEntity", query = "SELECT t FROM TokenEntity t WHERE t.token = :token"),
+    @NamedQuery(name = "TokenEntity.findByExpiracion", query = "SELECT t FROM TokenEntity t WHERE t.expiracion = :expiracion")})
 public class TokenEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

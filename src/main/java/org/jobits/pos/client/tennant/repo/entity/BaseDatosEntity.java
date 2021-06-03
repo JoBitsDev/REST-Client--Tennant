@@ -28,15 +28,15 @@ import javax.validation.constraints.Size;
  * 
  */
 @Entity
-@Table(name = "base_datos")
+@Table(name = "base_datos", schema = "tennant")
 @NamedQueries({
-    @NamedQuery(name = "BaseDatos.findAll", query = "SELECT b FROM BaseDatos b"),
-    @NamedQuery(name = "BaseDatos.findById", query = "SELECT b FROM BaseDatos b WHERE b.id = :id"),
-    @NamedQuery(name = "BaseDatos.findByNombre", query = "SELECT b FROM BaseDatos b WHERE b.nombre = :nombre"),
-    @NamedQuery(name = "BaseDatos.findByUrl", query = "SELECT b FROM BaseDatos b WHERE b.url = :url"),
-    @NamedQuery(name = "BaseDatos.findByUsuario", query = "SELECT b FROM BaseDatos b WHERE b.usuario = :usuario"),
-    @NamedQuery(name = "BaseDatos.findByContrasena", query = "SELECT b FROM BaseDatos b WHERE b.contrasena = :contrasena"),
-    @NamedQuery(name = "BaseDatos.findByDriver", query = "SELECT b FROM BaseDatos b WHERE b.driver = :driver")})
+    @NamedQuery(name = "BaseDatosEntity.findAll", query = "SELECT b FROM BaseDatosEntity b"),
+    @NamedQuery(name = "BaseDatosEntity.findById", query = "SELECT b FROM BaseDatosEntity b WHERE b.id = :id"),
+    @NamedQuery(name = "BaseDatosEntity.findByNombre", query = "SELECT b FROM BaseDatosEntity b WHERE b.nombre = :nombre"),
+    @NamedQuery(name = "BaseDatosEntity.findByUrl", query = "SELECT b FROM BaseDatosEntity b WHERE b.url = :url"),
+    @NamedQuery(name = "BaseDatosEntity.findByUsuario", query = "SELECT b FROM BaseDatosEntity b WHERE b.usuario = :usuario"),
+    @NamedQuery(name = "BaseDatosEntity.findByContrasena", query = "SELECT b FROM BaseDatosEntity b WHERE b.contrasena = :contrasena"),
+    @NamedQuery(name = "BaseDatosEntity.findByDriver", query = "SELECT b FROM BaseDatosEntity b WHERE b.driver = :driver")})
 public class BaseDatosEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

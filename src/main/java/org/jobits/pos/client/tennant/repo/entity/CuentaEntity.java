@@ -29,13 +29,13 @@ import javax.validation.constraints.Size;
  * 
  */
 @Entity
-@Table(name = "cuenta")
+@Table(name = "cuenta" , schema = "tennant")
 @NamedQueries({
-    @NamedQuery(name = "Cuenta.findAll", query = "SELECT c FROM Cuenta c"),
-    @NamedQuery(name = "Cuenta.findById", query = "SELECT c FROM Cuenta c WHERE c.id = :id"),
-    @NamedQuery(name = "Cuenta.findByUsuario", query = "SELECT c FROM Cuenta c WHERE c.usuario = :usuario"),
-    @NamedQuery(name = "Cuenta.findByContrasena", query = "SELECT c FROM Cuenta c WHERE c.contrasena = :contrasena"),
-    @NamedQuery(name = "Cuenta.findByEstado", query = "SELECT c FROM Cuenta c WHERE c.estado = :estado")})
+    @NamedQuery(name = "CuentaEntity.findAll", query = "SELECT c FROM CuentaEntity c"),
+    @NamedQuery(name = "CuentaEntity.findById", query = "SELECT c FROM CuentaEntity c WHERE c.id = :id"),
+    @NamedQuery(name = "CuentaEntity.findByUsuario", query = "SELECT c FROM CuentaEntity c WHERE c.usuario = :usuario"),
+    @NamedQuery(name = "CuentaEntity.findByContrasena", query = "SELECT c FROM CuentaEntity c WHERE c.contrasena = :contrasena"),
+    @NamedQuery(name = "CuentaEntity.findByEstado", query = "SELECT c FROM CuentaEntity c WHERE c.estado = :estado")})
 public class CuentaEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
