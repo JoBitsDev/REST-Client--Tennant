@@ -28,6 +28,7 @@ public class DatabaseRepository implements ConnectionPoolService {
     private static final String PU_DEFAULT_NAME = "pasarela_loggeo";
     private static final HashMap<String, String> PU_DEFAULT_PROPERTIES = getDefaultProperties();
     private static EntityManagerFactory DEFAULT_EMF;
+    private EntityManager currentConnection;
 
     @Override
     public EntityManagerFactory getEMF() {
@@ -39,7 +40,10 @@ public class DatabaseRepository implements ConnectionPoolService {
 
     @Override
     public EntityManager getCurrentConnection() {
-        return getEMF().createEntityManager();
+        if (currentConnection ==null) {
+            currentConnection = getEMF().createEntityManager();
+        }
+        return currentConnection;
     }
 
     @Override
@@ -59,7 +63,11 @@ public class DatabaseRepository implements ConnectionPoolService {
 
     @Override
     public void resetConnection() {
-        getEMF().getCache().evictAll();
+        if (currentConnection != null) {
+            getEMF().getCache().evictAll();
+            currentConnection.close();
+            currentConnection = null;
+        }
     }
 
     public static EntityManagerFactory getFactoryFrom(BaseDatos cuenta) {
