@@ -5,6 +5,7 @@
  */
 package org.jobits.pos.client.tennant.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Objects;
 
 /**
@@ -13,6 +14,7 @@ import java.util.Objects;
  * @author Jorge
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseDatos {
 
     private int id;

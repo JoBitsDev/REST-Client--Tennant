@@ -5,11 +5,13 @@
  */
 package org.jobits.pos.client.tennant.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.root101.clean.core.domain.DomainObjectValitaded;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.utils.validation.Validable;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 /**
  * FirstDream
@@ -17,18 +19,26 @@ import java.util.Objects;
  * @author Jorge
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cuenta {
 
     private Integer id;
+    @NotNull
     private String usuario;
+    @NotNull
     private String contrasena;
     private String estado;
     private List<BaseDatos> baseDatos;
     //TODO: lastseen and created
 
+    public Cuenta() {
+        setEstado(EstadoCuenta.ACTIVA.toString());
+    }
+
     public Cuenta(String usuario, String contrasena) {
         this.usuario = usuario;
         this.contrasena = contrasena;
+        setEstado(EstadoCuenta.ACTIVA.toString());
     }
 
     public Integer getId() {
@@ -116,7 +126,7 @@ public class Cuenta {
         return true;
     }
 
-        private String validateEstado(String estado) {
+    private String validateEstado(String estado) {
         for (EstadoCuenta v : EstadoCuenta.values()) {
             if (estado.equals(v.toString())) {
                 return estado;
