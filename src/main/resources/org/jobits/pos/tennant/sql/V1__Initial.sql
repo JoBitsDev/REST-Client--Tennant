@@ -5,8 +5,9 @@ CREATE TABLE Base_Datos (
   url        varchar(255) NOT NULL, 
   usuario    varchar(100) NOT NULL, 
   contrasena varchar(255) NOT NULL, 
-  driver     varchar(100) NOT NULL, 
-  Tokentoken varchar(255) NOT NULL, 
+  driver     varchar(100) NOT NULL,
+  Tokenid    int4, 
+  estado     varchar(255), 
   PRIMARY KEY (id));
 CREATE TABLE Cuenta (
   id         SERIAL NOT NULL, 
@@ -15,8 +16,9 @@ CREATE TABLE Cuenta (
   estado     varchar(255), 
   PRIMARY KEY (id));
 CREATE TABLE Token (
-  token      varchar(255) NOT NULL, 
+  id         SERIAL NOT NULL, 
+  token      varchar(255) NOT NULL UNIQUE, 
   expiracion date, 
-  PRIMARY KEY (token));
-ALTER TABLE Base_Datos ADD CONSTRAINT FKBase_Datos789795 FOREIGN KEY (Tokentoken) REFERENCES Token (token);
+  PRIMARY KEY (id));
+ALTER TABLE Base_Datos ADD CONSTRAINT FKBase_Datos106897 FOREIGN KEY (Tokenid) REFERENCES Token (id);
 ALTER TABLE Base_Datos ADD CONSTRAINT FKBase_Datos588987 FOREIGN KEY (Cuentaid) REFERENCES Cuenta (id);
