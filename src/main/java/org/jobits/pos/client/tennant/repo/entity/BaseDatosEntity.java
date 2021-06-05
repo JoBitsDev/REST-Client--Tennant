@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jobits.pos.client.tennant.repo.entity;
 
 import java.io.Serializable;
@@ -22,10 +21,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * 
+ *
  * JoBits
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "base_datos", schema = "tennant")
@@ -60,6 +60,8 @@ public class BaseDatosEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "usuario")
     private String usuario;
+    @Column(name = "estado")
+    private String estado;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -73,7 +75,7 @@ public class BaseDatosEntity implements Serializable {
     @JoinColumn(name = "cuentaid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CuentaEntity cuentaid;
-    @JoinColumn(name = "tokentoken", referencedColumnName = "token")
+    @JoinColumn(name = "tokentoken", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TokenEntity tokentoken;
 
@@ -155,6 +157,14 @@ public class BaseDatosEntity implements Serializable {
 
     public void setTokentoken(TokenEntity tokentoken) {
         this.tokentoken = tokentoken;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @Override

@@ -17,13 +17,26 @@ import java.util.Objects;
  */
 public class Token {
 
+    private int id;
     private String token;
     private LocalDateTime expira;
 
-    public Token(String token) {
-        this.token = token;
+    public Token() {
         long minutes = Long.valueOf(ResourceHandler.getString("org.jobits.pos.client.tennant.rest.domain.defautl_expiration_time"));
         expira = LocalDateTime.now().plusMinutes(minutes);
+    }
+
+    public Token(String token) {
+        this();
+        this.token = token;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getToken() {
