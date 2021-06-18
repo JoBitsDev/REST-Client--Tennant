@@ -52,8 +52,6 @@ public class TokenEntity implements Serializable {
     @Column(name = "expiracion")
     @Temporal(TemporalType.DATE)
     private Date expiracion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tokentoken")
-    private List<BaseDatosEntity> baseDatosList;
 
     public TokenEntity() {
     }
@@ -84,14 +82,6 @@ public class TokenEntity implements Serializable {
 
     public void setExpiracion(Date expiracion) {
         this.expiracion = expiracion;
-    }
-
-    public List<BaseDatosEntity> getBaseDatosList() {
-        return baseDatosList;
-    }
-
-    public void setBaseDatosList(List<BaseDatosEntity> baseDatosList) {
-        this.baseDatosList = baseDatosList;
     }
 
     @Override
