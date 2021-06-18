@@ -5,6 +5,8 @@
  */
 package org.jobits.pos.client.tennant.repo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -27,6 +29,7 @@ import javax.validation.constraints.Size;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = BaseDatosEntity.class)
 @Entity
 @Table(name = "base_datos", schema = "tennant")
 @NamedQueries({
@@ -72,12 +75,9 @@ public class BaseDatosEntity implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "driver")
     private String driver;
-    @JoinColumn(name = "cuentaid", referencedColumnName = "id")
+    @JoinColumn(name = "tokenid", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private CuentaEntity cuentaid;
-    @JoinColumn(name = "tokentoken", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private TokenEntity tokentoken;
+    private TokenEntity token;
 
     public BaseDatosEntity() {
     }
@@ -143,20 +143,12 @@ public class BaseDatosEntity implements Serializable {
         this.driver = driver;
     }
 
-    public CuentaEntity getCuentaid() {
-        return cuentaid;
+    public TokenEntity getToken() {
+        return token;
     }
 
-    public void setCuentaid(CuentaEntity cuentaid) {
-        this.cuentaid = cuentaid;
-    }
-
-    public TokenEntity getTokentoken() {
-        return tokentoken;
-    }
-
-    public void setTokentoken(TokenEntity tokentoken) {
-        this.tokentoken = tokentoken;
+    public void setToken(TokenEntity token) {
+        this.token = token;
     }
 
     public String getEstado() {
