@@ -40,6 +40,9 @@ public class Token {
     }
 
     public String getToken() {
+        if (expira.isBefore(LocalDateTime.now())) {
+            token = null;
+        }
         return token;
     }
 

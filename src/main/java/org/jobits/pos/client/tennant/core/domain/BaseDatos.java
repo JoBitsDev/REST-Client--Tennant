@@ -18,12 +18,12 @@ import java.util.Objects;
 public class BaseDatos {
 
     private int id;
-    private String nombreBaseDatos;
+    private String nombre;
     private String url;
     private String usuario;
     private String contrasena;
     private String driver;
-    private Token accessToken;
+    private Token token;
 
     public BaseDatos() {
     }
@@ -71,20 +71,20 @@ public class BaseDatos {
         this.id = id;
     }
 
-    public String getNombreBaseDatos() {
-        return nombreBaseDatos;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreBaseDatos(String nombreBaseDatos) {
-        this.nombreBaseDatos = nombreBaseDatos;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Token getAccessToken() {
-        return accessToken;
+    public Token getToken() {
+        return token;
     }
 
-    public void setAccessToken(Token accessToken) {
-        this.accessToken = accessToken;
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class BaseDatos {
         if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.nombreBaseDatos, other.nombreBaseDatos)) {
+        if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
         if (!Objects.equals(this.url, other.url)) {
@@ -128,7 +128,7 @@ public class BaseDatos {
 
     @Override
     public String toString() {
-        return "BaseDatos{" + "id=" + id + ", nombreBaseDatos=" + nombreBaseDatos + ", url=" + url + ", usuario=" + usuario + ", contrasena=" + contrasena + ", driver=" + driver + '}';
+        return "BaseDatos{" + "id=" + id + ", nombreBaseDatos=" + nombre + ", url=" + url + ", usuario=" + usuario + ", contrasena=" + contrasena + ", driver=" + driver + '}';
     }
 
 }
