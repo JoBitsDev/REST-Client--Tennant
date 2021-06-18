@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import org.jobits.db.core.domain.ConexionPropertiesWrapperModel;
 import org.jobits.db.core.usecase.UbicacionConexionService;
+import org.jobits.pos.client.tennant.core.domain.BaseDatos;
 
 /**
  *
@@ -40,7 +41,7 @@ public class DataBaseUbicacionService extends AbstractUseCaseImpl implements Ubi
     public void setSelectedConexion(ConexionPropertiesModel cpm) {
         ConexionWrapper.INSTANCE.setSelectedUbicacion(cpm);
     }
-
+    
     @Override
     public ConexionPropertiesWrapperModel getUbicaciones() {
         return ConexionWrapper.INSTANCE;
@@ -80,7 +81,7 @@ public class DataBaseUbicacionService extends AbstractUseCaseImpl implements Ubi
         public void setUbicacionSeleccionada(ConexionPropertiesModel cpm) {
             LOG.log(Level.INFO, "Ubicacion Seleccionada{0}", cpm.getNombreUbicacion());
         }
-
+        
         @Override
         public ConexionPropertiesModel[] getUbicaciones() {
             LOG.log(Level.INFO, "getUbicaciones");
