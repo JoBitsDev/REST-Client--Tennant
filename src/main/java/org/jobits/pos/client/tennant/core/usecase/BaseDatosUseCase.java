@@ -6,12 +6,26 @@
 package org.jobits.pos.client.tennant.core.usecase;
 
 import com.root101.clean.core.app.usecase.CRUDUseCase;
+import java.time.LocalDateTime;
 import org.jobits.pos.client.tennant.core.domain.BaseDatos;
+import org.jobits.pos.client.tennant.core.domain.Token;
 
 /**
  *
  * @author Jorge
  */
-public interface BaseDatosUseCase extends CRUDUseCase<BaseDatos>{
-    
+public interface BaseDatosUseCase extends CRUDUseCase<BaseDatos> {
+
+    public BaseDatos findByToken(String tenantID);
+
+    /**
+     * 
+     * @param dataBaseId
+     * @param until Dejarlo null si se quiere valor por defecto
+     * @return el token creado
+     */
+    public Token createTokenForDataBase(int dataBaseId, LocalDateTime until);
+
+    public Token getOrRefreshTokenFor(int idBaseDatos);
+
 }
