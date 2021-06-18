@@ -26,7 +26,7 @@ public class TennantWrapper {
 
     public TennantWrapper(Token tennantToken, BaseDatos c) {
         this.tennantToken = tennantToken;
-        c.setAccessToken(tennantToken);
+        c.setToken(tennantToken);
         this.tennantEmf = new ConexionPropertiesModel() {
             @Override
             public String getContrasena() {
