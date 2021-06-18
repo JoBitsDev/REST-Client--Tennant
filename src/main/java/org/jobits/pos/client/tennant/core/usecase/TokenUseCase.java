@@ -19,4 +19,6 @@ public interface TokenUseCase extends AbstractUseCase{
     public Token generateToken();
     
     public Token generateToken(LocalDateTime ultil);
+    
+    public Token refreshToken(int tokenId, LocalDateTime until);
 }
