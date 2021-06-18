@@ -6,9 +6,7 @@
 package org.jobits.pos.client.tennant.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.root101.clean.core.domain.DomainObjectValitaded;
 import com.root101.clean.core.domain.services.ResourceHandler;
-import com.root101.clean.core.utils.validation.Validable;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
@@ -79,6 +77,14 @@ public class Cuenta {
 
     public List<BaseDatos> getBaseDatos() {
         return baseDatos;
+    }
+
+    public BaseDatos addBaseDatos(BaseDatos newBaseDatos) {
+        if (getBaseDatos().contains(newBaseDatos)) {
+            throw new IllegalArgumentException("Base de datos ya existe en esta cuenta");
+        }
+        getBaseDatos().add(newBaseDatos);
+        return newBaseDatos;
     }
 
     public void setBaseDatos(List<BaseDatos> baseDatos) {

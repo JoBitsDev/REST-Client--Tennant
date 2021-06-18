@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.jobits.pos.client.tennant.repo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -15,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,13 +25,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * 
+ *
  * JoBits
+ *
  * @author Jorge
- * 
+ *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = CuentaEntity.class)
 @Entity
-@Table(name = "cuenta" , schema = "tennant")
+@Table(name = "cuenta", schema = "tennant")
 @NamedQueries({
     @NamedQuery(name = "CuentaEntity.findAll", query = "SELECT c FROM CuentaEntity c"),
     @NamedQuery(name = "CuentaEntity.findById", query = "SELECT c FROM CuentaEntity c WHERE c.id = :id"),
@@ -57,8 +61,9 @@ public class CuentaEntity implements Serializable {
     @Size(max = 255)
     @Column(name = "estado")
     private String estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuentaid")
-    private List<BaseDatosEntity> baseDatosList;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    private List<BaseDatosEntity> baseDatos;
 
     public CuentaEntity() {
     }
@@ -105,12 +110,12 @@ public class CuentaEntity implements Serializable {
         this.estado = estado;
     }
 
-    public List<BaseDatosEntity> getBaseDatosList() {
-        return baseDatosList;
+    public List<BaseDatosEntity> getBaseDatos() {
+        return baseDatos;
     }
 
-    public void setBaseDatosList(List<BaseDatosEntity> baseDatosList) {
-        this.baseDatosList = baseDatosList;
+    public void setBaseDatos(List<BaseDatosEntity> baseDatos) {
+        this.baseDatos = baseDatos;
     }
 
     @Override

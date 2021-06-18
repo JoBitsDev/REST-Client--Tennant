@@ -6,13 +6,25 @@
 package org.jobits.pos.client.tennant.rest.endpoint;
 
 import com.root101.clean.core.app.usecase.CRUDUseCase;
+import javax.websocket.server.PathParam;
 import org.jobits.pos.client.rest.assembler.CrudModelAssembler;
 import org.jobits.pos.client.rest.endpoint.CrudRestServiceTemplate;
+import org.jobits.pos.client.tennant.core.domain.BaseDatos;
 import org.jobits.pos.client.tennant.core.domain.Cuenta;
+import org.jobits.pos.client.tennant.core.domain.Token;
 import org.jobits.pos.client.tennant.core.module.TennantCoreModule;
+import org.jobits.pos.client.tennant.core.usecase.BaseDatosUseCase;
 import org.jobits.pos.client.tennant.core.usecase.CuentaUseCase;
+import org.jobits.pos.client.tennant.rest.endpoint.assembler.CuentaAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.HttpServerErrorException;
 
 /**
  *
@@ -22,19 +34,38 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping(path = "/cuenta")
+@RequestMapping(path = "/tennant/cuenta")
 public class CuentaEndpoint extends CrudRestServiceTemplate<Cuenta> {
 
-    private final CrudModelAssembler<Cuenta> a = new CrudModelAssembler<Cuenta>(CuentaEndpoint.class) {
-        @Override
-        public Object getId(Cuenta entity) {
-            return entity.getId();
+    private static final String PATH_ADD_DB = "/{idCuenta}/add-db";
+    private static final String PATH_REMOVE_DB = "/{idCuenta}/remove-db";
+    private static final String PATH_GET_TOKEN_FOR = "/{idCuenta}/token-for/{idBaseDatos}";
+
+    @RequestMapping(method = {RequestMethod.POST}, path = {PATH_ADD_DB})
+    public EntityModel<Cuenta> addBaseDatosToCuenta(@PathVariable("idCuenta") int idCuenta, @RequestBody BaseDatos baseDatos) {
+        Cuenta cuenta = findBy(idCuenta).getContent();
+        if (cuenta != null) {
+            cuenta.addBaseDatos(baseDatos);
         }
-    };
+        edit(cuenta);
+        return getAssembler().toModel(cuenta);
+    }
+
+    @RequestMapping(method = {RequestMethod.GET}, path = {PATH_GET_TOKEN_FOR})
+    public EntityModel<Token> getTokenFor(@PathVariable("idCuenta") int idCuenta, @PathVariable("idBaseDatos") int idBaseDatos) {
+        Cuenta cuenta = findBy(idCuenta).getContent();
+        Token t;
+        if (cuenta != null) {
+            t = TennantCoreModule.getInstance().getImplementation(BaseDatosUseCase.class).getOrRefreshTokenFor(idBaseDatos);
+            edit(cuenta);
+            return EntityModel.of(t, linkTo(methodOn(this.getClass()).getTokenFor(idCuenta, idBaseDatos)).withSelfRel());
+        }
+        throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "No existe cuenta");
+    }
 
     @Override
     public CrudModelAssembler<Cuenta> getAssembler() {
-        return a;
+        return new CuentaAssembler();
     }
 
     @Override
