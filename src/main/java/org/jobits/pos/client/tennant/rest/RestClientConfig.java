@@ -6,6 +6,7 @@
 
 package org.jobits.pos.client.tennant.rest;
 
+import org.jobits.pos.client.tennant.rest.endpoint.CuentaEndpoint;
 import org.jobits.pos.client.tennant.rest.service.RequestInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,6 +23,7 @@ public class RestClientConfig implements WebMvcConfigurer{
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-      // registry.addInterceptor(new RequestInterceptor()).excludePathPatterns("/tennant/cuenta/**");//.addPathPatterns("/*");
+       registry.addInterceptor(new RequestInterceptor()).excludePathPatterns(
+               "/**/tennant/cuenta/**");//.addPathPatterns("/*");
     }
 } 

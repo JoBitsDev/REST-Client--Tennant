@@ -36,7 +36,7 @@ public class RequestInterceptor implements AsyncHandlerInterceptor {
         var tennantID = getTennantToken(request);
         if (tennantID == null) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            response.getWriter().append("X-TenantID not present in the Request Header");
+            response.getWriter().append("Tenant not present in the Request Header");
             return false;
         }
         pointConexionTo(tennantID);
@@ -54,8 +54,8 @@ public class RequestInterceptor implements AsyncHandlerInterceptor {
         System.out.println("In preHandle we are Intercepting the Request");
         System.out.println("____________________________________________");
         String requestURI = request.getRequestURI();
-        String tenantID = request.getHeader("X-TenantID");
-        System.out.println("RequestURI::" + requestURI + " || Search for X-TenantID  :: " + tenantID);
+        String tenantID = request.getHeader("Tennant");
+        System.out.println("RequestURI::" + requestURI + " || Search for Tenant  :: " + tenantID);
         System.out.println("____________________________________________");
         return tenantID;
 
