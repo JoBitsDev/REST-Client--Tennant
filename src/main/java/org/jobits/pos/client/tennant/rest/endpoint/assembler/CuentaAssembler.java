@@ -34,8 +34,8 @@ public class CuentaAssembler extends CrudModelAssembler<Cuenta> {
     @Override
     public EntityModel<Cuenta> toModel(Cuenta entity) {
         return super.toModel(entity).add(
-                linkTo(methodOn(CuentaEndpoint.class).addBaseDatosToCuenta(entity.getId(), null)).withRel("Add-Base-Datos"),
-                linkTo(methodOn(CuentaEndpoint.class).addBaseDatosToCuenta(entity.getId(), null)).withRel("Add-Base-Datos")
+                linkTo(methodOn(CuentaEndpoint.class).addBaseDatosToCuenta(entity.getId(), null)).withRel("add_base_datos")
+                //,linkTo(methodOn(CuentaEndpoint.class).getTokenFor(entity.getId())).withRel("get_token")
         ); //To change body of generated methods, choose Tools | Templates.
     }
 }
