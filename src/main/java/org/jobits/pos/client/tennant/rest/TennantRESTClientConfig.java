@@ -21,7 +21,7 @@ public class TennantRESTClientConfig {
 
     public static final String BASE_PACKAGE = "org.jobits.pos.client.tennant.rest";
 
-    public TennantRESTClientConfig() {
+    static {
         TennantCoreModule.init(TennantRepoModule.init());
     }
 
