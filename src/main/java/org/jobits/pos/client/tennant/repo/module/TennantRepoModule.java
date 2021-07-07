@@ -13,9 +13,11 @@ import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.clean.core.exceptions.AlreadyInitModule;
 import com.root101.clean.core.exceptions.NotInitModule;
 import org.jobits.db.core.module.DataVersionControlModule;
+import org.jobits.db.core.usecase.UbicacionConexionHandler;
 import org.jobits.db.pool.ConnectionPoolHandler;
 import org.jobits.db.versioncontrol.DataVersionControlHandler;
 import org.jobits.db.versioncontrol.DataVersionControlService;
+import org.jobits.pos.client.tennant.rest.service.DataBaseUbicacionService;
 import org.jobits.pos.client.tennant.rest.service.DatabaseRepository;
 
 /**
@@ -75,7 +77,7 @@ public class TennantRepoModule extends DefaultAbstractModule {
         String dir = "org/jobits/pos/tennant/sql";
         ConnectionPoolHandler.registerConnectionPoolService(getModuleName(), new DatabaseRepository());
         DataVersionControlHandler.registerDataVersionControlService(DataVersionControlService.from(MODULE_NAME, dir, schema));
-
+        UbicacionConexionHandler.registerUbicacionConexionService(DataBaseUbicacionService.getInstance());
     }
 
     @Override
