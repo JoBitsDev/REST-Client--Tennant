@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class Token {
 
-    private int id;
+    private Integer id;
     private String token;
     private LocalDateTime expira;
 
@@ -31,11 +31,11 @@ public class Token {
         this.token = token;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
