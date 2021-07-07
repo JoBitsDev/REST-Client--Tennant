@@ -26,16 +26,14 @@ public class TokenUseCaseImpl extends DefaultCRUDUseCase<Token>
     public Token generateToken() {
         Token newToken = new Token();
         newToken.setToken(generateStringToken());
-        create(newToken);
-        return newToken;
+        return create(newToken);
     }
 
     @Override
     public Token generateToken(LocalDateTime ultil) {
         var ret = generateToken();
         ret.setExpira(ultil);
-        edit(ret);
-        return ret;
+        return edit(ret);
     }
 
     @Override
@@ -44,8 +42,7 @@ public class TokenUseCaseImpl extends DefaultCRUDUseCase<Token>
         var ret = findBy(tokenId);
         ret.setExpira(tmp.getExpira());
         ret.setToken(tmp.getToken());
-        edit(ret);
-        return ret;
+        return edit(ret);
     }
 
     private String generateStringToken() {

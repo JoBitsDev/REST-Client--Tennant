@@ -38,8 +38,10 @@ public class BaseDatosUseCaseImpl extends DefaultCRUDUseCase<BaseDatos>
     @Override
     public BaseDatos findByToken(String tenantID) {
         for (BaseDatos baseDatos : findAll()) {
-            if (baseDatos.getToken().getToken().equals(tenantID)) {
-                return baseDatos;
+            if (baseDatos.getToken() != null) {
+                if (baseDatos.getToken().getToken().equals(tenantID)) {
+                    return baseDatos;
+                }
             }
         }
         return null;
@@ -47,6 +49,7 @@ public class BaseDatosUseCaseImpl extends DefaultCRUDUseCase<BaseDatos>
 
     @Override
     public Token getOrRefreshTokenFor(int idBaseDatos) {
+        getRepo().startTransaction();
         BaseDatos bd = findBy(idBaseDatos);
         if (bd != null) {
             if (bd.getToken() != null) {
@@ -56,6 +59,8 @@ public class BaseDatosUseCaseImpl extends DefaultCRUDUseCase<BaseDatos>
             }
             Token ret = tokenUseCase.generateToken();
             bd.setToken(ret);
+            edit(bd);
+            getRepo().commitTransaction();
             return ret;
         }
         throw new NullPointerException("No existe la base de datos en el sistema con id" + idBaseDatos);
