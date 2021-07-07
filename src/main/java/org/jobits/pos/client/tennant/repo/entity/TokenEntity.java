@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +28,7 @@ import javax.validation.constraints.Size;
 /**
  *
  * JoBits
+ *
  * @author Jorge
  *
  */
@@ -40,7 +42,8 @@ public class TokenEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_id_seq")
+    @SequenceGenerator(name = "token_id_seq", sequenceName = "token_id_seq", allocationSize = 1, schema = "tennant")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
