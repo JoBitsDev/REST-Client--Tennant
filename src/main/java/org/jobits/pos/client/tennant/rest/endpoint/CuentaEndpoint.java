@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.HttpServerErrorException;
@@ -52,7 +53,7 @@ public class CuentaEndpoint extends CrudRestServiceTemplate<Cuenta> {
         edit(cuenta);
         return getAssembler().toModel(cuenta);
     }
-
+    
     @RequestMapping(method = {RequestMethod.GET}, path = {PATH_GET_TOKEN_FOR})
     public EntityModel<Token> getTokenFor(
             @RequestHeader("Authorization") String base64Credentials,
