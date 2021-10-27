@@ -15,8 +15,8 @@ jar {
 
 dependencies {
     implementation project(':Commons')
-    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.8'
-    implementation 'org.jobits.pos:org.jobits.pos.tennant:1.0.1'
+    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.11'
+    implementation 'org.jobits.pos:org.jobits.pos.tennant:1.0.2'
 
     
 }
